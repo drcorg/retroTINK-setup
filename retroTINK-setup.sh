@@ -10,7 +10,6 @@
 #
 # Remember to use on files = chown pi:pi
 #
-set -o errexit
 
 killall emulationstation
 
