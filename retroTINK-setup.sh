@@ -115,5 +115,5 @@ Main_Program (){
 }
 
 Check_Root
-if [ ! -z $PREPPED ]; then Do_Prep fi
+if [ ! -z $PREPPED ]; then Do_Prep; fi
 Main_Program
