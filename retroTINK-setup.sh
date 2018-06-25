@@ -22,6 +22,7 @@ Do_Prep (){
     TEMPDIR=$(mktemp -d)
     git clone https://github.com/marcteale/retroTINK-setup.git $TEMPDIR
     $TEMPDIR/retroTINK-setup.sh
+    export PREPPED=1
 }
 
 Continue_Install (){
@@ -114,5 +115,5 @@ Main_Program (){
 }
 
 Check_Root
-Do_Prep
+if [ ! -z $PREPPED ]; then Do_Prep fi
 Main_Program
