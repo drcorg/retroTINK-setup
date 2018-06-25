@@ -25,25 +25,14 @@ if [[ $EUID -ne 0 ]]; then
 fi
 }
 
-# Check for Internet Access
-Check_Internet () {
-DIALOG_INTERNET=${DIALOG=dialog}
-
-wget -q --tries=10 --timeout=20 --spider http://www.google.com
-if [[ $? -ne 0 ]]; then
-   $DIALOG_INTERNET --title  "No Internet Access!" --clear \
-   --msgbox "\n\nPlease connect the Raspberry Pi to the Internet, required to continue setting up RetroTINK..." 11 40
-   exit 1
-fi
-}
-
 # Do some prep work to let us run from a wget command
 Do_Prep (){
-cd /home/pi/ 
-git clone https://github.com/marcteale/retroTINK-setup.git
-chown pi:pi -R retroTINK-setup
-cd retroTINK-setup
-chmod +x ./retroTINK-setup.sh
+if [ ! -d /home/pi/retroTINK-setup ]; then
+  git clone https://github.com/marcteale/retroTINK-setup.git
+  chown pi:pi -R retroTINK-setup
+  cd retroTINK-setup
+  chmod +x ./retroTINK-setup.sh
+fi
 sudo ./retroTINK-setup.sh
 }
 
@@ -170,5 +159,4 @@ esac
 
 Check_Root
 Do_Prep
-Check_Internet
 Main_Program
