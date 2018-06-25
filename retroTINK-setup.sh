@@ -22,7 +22,6 @@ Do_Prep (){
     TEMPDIR=$(mktemp -d)
     git clone https://github.com/marcteale/retroTINK-setup.git $TEMPDIR
     $TEMPDIR/retroTINK-setup.sh
-fi
 }
 
 Continue_Install (){
