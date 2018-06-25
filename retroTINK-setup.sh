@@ -33,6 +33,8 @@ if [ ! -d /home/pi/retroTINK-setup ]; then
     cd retroTINK-setup
     chmod +x ./retroTINK-setup.sh
     sudo ./retroTINK-setup.sh
+else
+    cd /home/pi/retroTINK-setup
 fi
 }
 
