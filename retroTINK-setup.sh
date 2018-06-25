@@ -4,25 +4,17 @@ killall emulationstation
 
 # Exit on error
 set -o errexit
+TEMPDIR=$(mktemp -d)
 
 # Check for Root Access
 Check_Root (){
-DIALOG_ROOT=${DIALOG=dialog}
-me=`basename "$0"`
+    DIALOG_ROOT=${DIALOG=dialog}
 
-if [[ $EUID -ne 0 ]]; then
-    $DIALOG_ROOT --title  "This script must be run as root" --clear \
-    --msgbox "\n\nType:\n\nsudo ./$me" 11 40
-    exit 1
-fi
-}
-
-# Do some prep work to let us run from a wget command
-Do_Prep (){
-    TEMPDIR=$(mktemp -d)
-    git clone https://github.com/marcteale/retroTINK-setup.git $TEMPDIR
-    $TEMPDIR/retroTINK-setup.sh
-    export PREPPED=1
+    if [[ $EUID -ne 0 ]]; then
+        $DIALOG_ROOT --title  "Insufficient privileges" --clear \
+        --msgbox "\n\nThis script must be run as root.\n\nUsage:\n  wget https://raw.githubusercontent.com/Vykyan/retroTINK-setup/master/retroTINK-setup.sh -O - | sudo bash" 11 112
+        exit 1
+    fi
 }
 
 Continue_Install (){
@@ -34,7 +26,7 @@ Continue_Install (){
     wonderswan wonderswancolor'
 
     for SYSTEM in $SYSTEMS; do
-        mkdir -p $HOME/RetroPie/save{files,states}/$SYSTEM
+        mkdir -p /home/pi/RetroPie/save{files,states}/$SYSTEM
     done
     chown pi:pi -R /home/pi/RetroPie/save{files,states}
 
@@ -77,10 +69,11 @@ follow symlinks = yes
 wide links = yes
 EOF
 
+    cp /boot/config.txt{,.retrotink}
     cp -f $TEMPDIR/config.txt /boot/config.txt
     rm -rf $TEMPDIR
-    $DIALOG --title " RetroTINK Installation Script" --clear \
-            --yesno "\n\n Installation Complete!  Please reboot your Rasbperry Pi now to use your new RetroTINK enabled RetroPie!\n\nReboot now?" 20 40
+    $DIALOG --title "RetroTINK Installation Script" --clear \
+            --yesno "\n\nInstallation Complete!  Please reboot your Rasbperry Pi now to use your new RetroTINK enabled RetroPie!\n\nReboot now?" 20 40
     case "$?" in
     0)
         sync;sync;reboot
@@ -104,7 +97,7 @@ Stopped_Install (){
 }
 
 Main_Program (){
-    $DIALOG --title " RetroTINK Installation Script" --clear \
+    $DIALOG --title "RetroTINK Installation Script" --clear \
             --yesno "\nThis program will install the needed files & modify some settings to enable the use of the RetroTINK Raspberry Pi HAT with RetroPie (versions 4.3 and above)\n\nWARNING: This script should be run on a fresh installation of RetroPie and may not function properly or at all if changes have been made.\n\nContinue installation?" 20 40
     case "$?" in
         0)
@@ -115,5 +108,6 @@ Main_Program (){
 }
 
 Check_Root
-if [ ! -z $PREPPED ]; then Do_Prep; fi
+git clone https://github.com/marcteale/retroTINK-setup.git $TEMPDIR
 Main_Program
+rm -rf $TEMPDIR
