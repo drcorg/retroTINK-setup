@@ -28,12 +28,12 @@ fi
 # Do some prep work to let us run from a wget command
 Do_Prep (){
 if [ ! -d /home/pi/retroTINK-setup ]; then
-  git clone https://github.com/marcteale/retroTINK-setup.git
-  chown pi:pi -R retroTINK-setup
-  cd retroTINK-setup
-  chmod +x ./retroTINK-setup.sh
+    git clone https://github.com/marcteale/retroTINK-setup.git
+    chown pi:pi -R retroTINK-setup
+    cd retroTINK-setup
+    chmod +x ./retroTINK-setup.sh
+    sudo ./retroTINK-setup.sh
 fi
-sudo ./retroTINK-setup.sh
 }
 
 Continue_Install (){
