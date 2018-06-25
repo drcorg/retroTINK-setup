@@ -10,11 +10,11 @@
 #
 # Remember to use on files = chown pi:pi
 #
-
-# Check for Root Access
+set -o errexit
 
 killall emulationstation
 
+# Check for Root Access
 Check_Root (){
 DIALOG_ROOT=${DIALOG=dialog}
 me=`basename "$0"`
@@ -36,6 +36,16 @@ if [[ $? -ne 0 ]]; then
    --msgbox "\n\nPlease connect the Raspberry Pi to the Internet, required to continue setting up RetroTINK..." 11 40
    exit 1
 fi
+}
+
+# Do some prep work to let us run from a wget command
+Do_Prep (){
+cd /home/pi/ 
+git clone https://github.com/marcteale/retroTINK-setup.git
+chown pi:pi -R retroTINK-setup
+cd retroTINK-setup
+chmod +x ./retroTINK-setup.sh
+sudo ./retroTINK-setup.sh
 }
 
 Continue_Install (){
@@ -160,5 +170,6 @@ esac
 }
 
 Check_Root
+Do_Prep
 Check_Internet
 Main_Program
