@@ -15,7 +15,7 @@ Console/SSH into your fresh retropie install.
 
 Type/paste command (All one line)
 
-`wget https://raw.githubusercontent.com/Vykyan/retroTINK-setup/master/retroTINK-setup.sh -O - | sudo bash`
+`wget https://raw.githubusercontent.com/marcteale/retroTINK-setup/master/retroTINK-setup.sh -O - | sudo bash`
 
 Follow Instructions. (Make sure to change emulationstation theme to "tft-retrotink" once back in Emulationstation after reboot!
 
