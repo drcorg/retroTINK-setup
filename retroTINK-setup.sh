@@ -12,7 +12,7 @@ Check_Root (){
 
     if [[ $EUID -ne 0 ]]; then
         $DIALOG_ROOT --title  "Insufficient privileges" --clear \
-        --msgbox "\n\nThis script must be run as root.\n\nUsage:\n  wget https://raw.githubusercontent.com/Vykyan/retroTINK-setup/master/retroTINK-setup.sh -O - | sudo bash" 11 112
+        --msgbox "\n\nThis script must be run as root.\n\nUsage:\n  wget https://raw.githubusercontent.com/marcteale/retroTINK-setup/master/retroTINK-setup.sh -O - | sudo bash" 11 112
         exit 1
     fi
 }
